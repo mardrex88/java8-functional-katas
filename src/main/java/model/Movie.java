@@ -25,6 +25,11 @@ public class Movie {
         this.interestingMoments = interestingMoments;
     }
 
+    public Movie(Integer id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -2,11 +2,15 @@ package katas;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.sun.source.tree.ReturnTree;
 import model.Movie;
 import util.DataUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /*
     Goal: use map() to project an array of videos into an array of {id, title}-pairs
@@ -16,7 +20,11 @@ import java.util.Map;
 public class Kata1 {
     public static List<Map> execute() {
         List<Movie> movies = DataUtil.getMovies();
-
-        return ImmutableList.of(ImmutableMap.of("id", 5, "title", "Bad Boys"));
+        List<Map> newMovies = movies.stream()
+                .map((movie) ->
+                        ImmutableMap.of("id", movie.getId(), "title", movie.getTitle()))
+                .map(ImmutableMap::copyOf).collect(Collectors.toList());
+        System.out.println(newMovies);
+        return newMovies;
     }
 }
