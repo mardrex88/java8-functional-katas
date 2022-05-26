@@ -6,6 +6,7 @@ import util.DataUtil;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /*
     Goal: Create a datastructure from the given data:
@@ -63,8 +64,25 @@ public class Kata11 {
         List<Map> boxArts = DataUtil.getBoxArts();
         List<Map> bookmarkList = DataUtil.getBookmarkList();
 
-        return ImmutableList.of(ImmutableMap.of("name", "someName", "videos", ImmutableList.of(
-                ImmutableMap.of("id", 5, "title", "The Chamber", "time", 123, "boxart", "someUrl")
-        )));
+        List<Map> resutl =  DataUtil.getLists().stream()
+                .map(list -> ImmutableMap.of("name", list.get("name"), "videos",
+                        DataUtil.getVideos().stream()
+                                .filter(video -> video.get("listId").equals(list.get("id")))
+                                .map(video -> ImmutableMap.of("id", video.get("id"), "title", video.get("title"),
+                                        "time", DataUtil.getBookmarkList().stream()
+                                                .filter(bookmark -> bookmark.get("videoId").equals(video.get("id")))
+                                                .map(bookmark -> bookmark.get("time")).findFirst(),
+                                        "boxart", DataUtil.getBoxArts().stream()
+                                                .filter(boxarts -> boxarts.get("videoId").equals(video.get("id")))
+                                                .reduce((min, box) -> {
+                                                    int mSize = (Integer) min.get("width") * (Integer) min.get("height");
+                                                    int bSize = (Integer) box.get("width") * (Integer) box.get("height");
+                                                    return (bSize < mSize) ? box : min;
+                                                })
+                                                .map(boxarts -> boxarts.get("url"))))
+                                .collect(Collectors.toList())))
+                .collect(Collectors.toList());
+
+        return  resutl;
     }
 }
