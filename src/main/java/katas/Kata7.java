@@ -25,7 +25,6 @@ public class Kata7 {
                 .collect(Collectors.toList());
 
 
-        return newList
-                ;
+        return newList;
     }
 }
