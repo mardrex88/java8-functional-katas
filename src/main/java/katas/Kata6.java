@@ -6,7 +6,6 @@ import util.DataUtil;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /*
     Goal: Retrieve the url of the largest boxart using map() and reduce()

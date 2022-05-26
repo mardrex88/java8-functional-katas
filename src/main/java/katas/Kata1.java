@@ -1,13 +1,9 @@
 package katas;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.sun.source.tree.ReturnTree;
 import model.Movie;
 import util.DataUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

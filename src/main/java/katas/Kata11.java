@@ -64,7 +64,7 @@ public class Kata11 {
         List<Map> boxArts = DataUtil.getBoxArts();
         List<Map> bookmarkList = DataUtil.getBookmarkList();
 
-        List<Map> resutl =  DataUtil.getLists().stream()
+        List<Map> result =  DataUtil.getLists().stream()
                 .map(list -> ImmutableMap.of("name", list.get("name"), "videos",
                         DataUtil.getVideos().stream()
                                 .filter(video -> video.get("listId").equals(list.get("id")))
@@ -74,15 +74,11 @@ public class Kata11 {
                                                 .map(bookmark -> bookmark.get("time")).findFirst(),
                                         "boxart", DataUtil.getBoxArts().stream()
                                                 .filter(boxarts -> boxarts.get("videoId").equals(video.get("id")))
-                                                .reduce((min, box) -> {
-                                                    int mSize = (Integer) min.get("width") * (Integer) min.get("height");
-                                                    int bSize = (Integer) box.get("width") * (Integer) box.get("height");
-                                                    return (bSize < mSize) ? box : min;
-                                                })
+                                                .reduce((a, b) ->  (Integer) a.get("width")< (Integer) b.get("width")?a:b)
                                                 .map(boxarts -> boxarts.get("url"))))
                                 .collect(Collectors.toList())))
                 .collect(Collectors.toList());
 
-        return  resutl;
+        return  result;
     }
 }
